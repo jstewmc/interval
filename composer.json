@@ -1,0 +1,28 @@
+{
+	"name": "jstewmc/interval",
+	"description": "A set of numbers between two endpoints",
+	"keywords": ["php", "jstewmc", "interval"],
+	"authors": [
+		{
+			"name": "Jack Clayton",
+			"email": "clayjs0@gmail.com"	
+		}
+	],
+	"repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/jstewmc/test-case"
+        }   	
+	],
+	"require": {
+		"php": "^7.0"
+	},
+	"require-dev": {
+		"jstewmc/test-case": "^0.1"
+	},
+	"autoload": {
+		"psr-4": {
+			"Jstewmc\\Interval\\": "src/"
+		}
+	}
+}
