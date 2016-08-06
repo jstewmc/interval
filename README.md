@@ -80,6 +80,11 @@ $interval->isLowerInclusive();  // returns false
 $interval->isLowerExclusive();  // returns true
 $interval->isUpperInclusive();  // returns true
 $interval->isUpperExclusive();  // returns false
+
+echo $interval->setLowerInclusive();  // prints "[2, 4]"
+echo $interval->setLowerExclusive();  // prints "(2, 4]"
+echo $interval->setUpperInclusive();  // prints "(2, 4]"
+echo $interval->setUpperExclusive();  // prints "(2, 4)"
 ```
 
 
