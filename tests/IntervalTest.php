@@ -64,105 +64,6 @@ class IntervalTest extends TestCase
     }
     
     
-    /* !getIsLowerInclusive() */
-    
-    /**
-     * getIsLowerInclusive() should return bool
-     */
-    public function testGetIsLowerInclusive()
-    {
-        $interval = new Interval();
-        
-        $this->setProperty('isLowerInclusive', $interval, true);
-        
-        $this->assertTrue($interval->getIsLowerInclusive());
-        
-        return;
-    }
-    
-    
-    /* !getIsUpperInclusive() */
-    
-    /**
-     * getIsUpperInclusive() should return bool
-     */
-    public function testGetIsUpperInclusive()
-    {
-        $interval = new Interval();
-        
-        $this->setProperty('isUpperInclusive', $interval, true);
-        
-        $this->assertTrue($interval->getIsUpperInclusive());
-        
-        return;
-    }
-    
-    
-    /* !getLower() */
-    
-    /**
-     * getLower() should return null if lower does not exist
-     */
-    public function testGetLowerReturnsNullIfLowerDoesNotExist()
-    {
-        return $this->assertNull((new Interval())->getLower());
-    }
-    
-    /**
-     * getLower() should return number if lower does exist
-     */
-    public function testGetLowerReturnsNumberIfLowerDoesExist()
-    {
-        $lower = 1;
-        
-        $interval = new Interval();
-        
-        $this->setProperty('lower', $interval, $lower);
-        
-        $this->assertEquals($lower, $interval->getLower());
-        
-        return;
-    }
-    
-    
-    /* !getSeparator() */
-    
-    /**
-     * getSeparator() should return string
-     */
-    public function testGetSeparator()
-    {
-        return $this->assertTrue(is_string((new Interval())->getSeparator()));
-    }
-    
-    
-    /* !getUpper() */
-    
-    /**
-     * getUpper() should return null if upper does not exist
-     */
-    public function testGetUpperReturnsNullIfUpperDoesNotExist()
-    {
-        return $this->assertNull((new Interval())->getUpper());
-    }
-    
-    /**
-     * getUpper() should return number if upper does exist
-     */
-    public function testGetUpperReturnsNumberIfUpperDoesExist()
-    {
-        $upper = 1;
-        
-        $interval = new Interval();
-        
-        $this->setProperty('upper', $interval, $upper);
-        
-        $this->assertEquals($upper, $interval->getUpper());
-        
-        return;
-    }
-    
-    
     /* !compare() */
     
     /**
@@ -288,6 +189,228 @@ class IntervalTest extends TestCase
     }
     
     
+    /* !getIsLowerInclusive() */
+    
+    /**
+     * getIsLowerInclusive() should return bool
+     */
+    public function testGetIsLowerInclusive()
+    {
+        $interval = new Interval();
+        
+        $this->setProperty('isLowerInclusive', $interval, true);
+        
+        $this->assertTrue($interval->getIsLowerInclusive());
+        
+        return;
+    }
+    
+    
+    /* !getIsUpperInclusive() */
+    
+    /**
+     * getIsUpperInclusive() should return bool
+     */
+    public function testGetIsUpperInclusive()
+    {
+        $interval = new Interval();
+        
+        $this->setProperty('isUpperInclusive', $interval, true);
+        
+        $this->assertTrue($interval->getIsUpperInclusive());
+        
+        return;
+    }
+    
+    
+    /* !getLower() */
+    
+    /**
+     * getLower() should return null if lower does not exist
+     */
+    public function testGetLowerReturnsNullIfLowerDoesNotExist()
+    {
+        return $this->assertNull((new Interval())->getLower());
+    }
+    
+    /**
+     * getLower() should return number if lower does exist
+     */
+    public function testGetLowerReturnsNumberIfLowerDoesExist()
+    {
+        $lower = 1;
+        
+        $interval = new Interval();
+        
+        $this->setProperty('lower', $interval, $lower);
+        
+        $this->assertEquals($lower, $interval->getLower());
+        
+        return;
+    }
+    
+    
+    /* !getSeparator() */
+    
+    /**
+     * getSeparator() should return string
+     */
+    public function testGetSeparator()
+    {
+        return $this->assertTrue(is_string((new Interval())->getSeparator()));
+    }
+    
+    
+    /* !getUpper() */
+    
+    /**
+     * getUpper() should return null if upper does not exist
+     */
+    public function testGetUpperReturnsNullIfUpperDoesNotExist()
+    {
+        return $this->assertNull((new Interval())->getUpper());
+    }
+    
+    /**
+     * getUpper() should return number if upper does exist
+     */
+    public function testGetUpperReturnsNumberIfUpperDoesExist()
+    {
+        $upper = 1;
+        
+        $interval = new Interval();
+        
+        $this->setProperty('upper', $interval, $upper);
+        
+        $this->assertEquals($upper, $interval->getUpper());
+        
+        return;
+    }
+    
+    /* !isLowerExclusive() */
+    
+    /**
+     * isLowerExclusive() should return false if the lower-bound is inclusive
+     */
+    public function testIsLowerExclusiveReturnsFalseIfLowerIsInclusive()
+    {
+        $interval = new Interval();
+        
+        $this->setProperty('isLowerInclusive', $interval, true);
+        
+        $this->assertFalse($interval->isLowerExclusive());
+        
+        return;
+    }
+    
+    /**
+     * isLowerExclusive() should return true if the lower-bound is exclusive
+     */
+    public function testIsLowerExclusiveReturnsTrueIfLowerIsNotInclusive()
+    {
+        $interval = new Interval();
+        
+        $this->setProperty('isLowerInclusive', $interval, false);
+        
+        $this->assertTrue($interval->isLowerExclusive());
+        
+        return;
+    }
+    
+    
+    /* !isLowerInclusive() */
+    
+    /**
+     * isLowerInclusive() should return true if the lower-bound is inclusive
+     */
+    public function testIsLowerInclusiveReturnsTrueIfLowerIsInclusive()
+    {
+        $interval = new Interval();
+        
+        $this->setProperty('isLowerInclusive', $interval, true);
+        
+        $this->assertTrue($interval->isLowerInclusive());
+        
+        return;
+    }
+    
+    /**
+     * isLowerInclusive() should return false if the lower-bound is exclusive
+     */
+    public function testIsLowerInclusiveReturnsFalseIfLowerIsNotInclusive()
+    {
+        $interval = new Interval();
+        
+        $this->setProperty('isLowerInclusive', $interval, false);
+        
+        $this->assertFalse($interval->isLowerInclusive());
+        
+        return;
+    }
+    
+    
+    /* !isUpperExclusive() */
+    
+    /**
+     * isUpperExclusive() should return false if the upper-bound is inclusive
+     */
+    public function testIsUpperExclusiveReturnsFalseIfUpperIsInclusive()
+    {
+        $interval = new Interval();
+        
+        $this->setProperty('isUpperInclusive', $interval, true);
+        
+        $this->assertFalse($interval->isUpperExclusive());
+        
+        return;
+    }
+    
+    /**
+     * isUpperExclusive() should return true if the upper-bound is not inclusive
+     */
+    public function testIsUpperExclusiveReturnsTrueIfUpperIsNotInclusive()
+    {
+        $interval = new Interval();
+        
+        $this->setProperty('isUpperInclusive', $interval, false);
+        
+        $this->assertTrue($interval->isUpperExclusive());
+        
+        return;
+    }
+    
+    
+    /* !isUpperInclusive() */
+    
+    /**
+     * isUpperInclusive() should return true if the upper-bound is inclusive
+     */
+    public function testIsUpperInclusiveReturnsTrueIfUpperIsInclusive()
+    {
+        $interval = new Interval();
+        
+        $this->setProperty('isUpperInclusive', $interval, true);
+        
+        $this->assertTrue($interval->isUpperInclusive());
+        
+        return;
+    }
+    
+    /**
+     * isUpperInclusive() should return false if the upper-bound is not inclusive
+     */
+    public function testIsUpperInclusiveReturnsFalseIfUpperIsNotInclusive()
+    {
+        $interval = new Interval();
+        
+        $this->setProperty('isUpperInclusive', $interval, false);
+        
+        $this->assertFalse($interval->isUpperInclusive());
+        
+        return;
+    }
+    
+    
     /* !parse() */
     
     /**
@@ -406,6 +529,39 @@ class IntervalTest extends TestCase
         return;
     }
     
+    
+    /* !setLowerExclusive() */
+    
+    /**
+     * setLowerExclusive() should set the is-lower-inclusive flag to false
+     */
+    public function testSetLowerExclusiveReturnsSelf()
+    {
+        $interval = new Interval();
+        
+        $this->assertSame($interval, $interval->setLowerExclusive());
+        $this->assertFalse($this->getProperty('isLowerInclusive', $interval));
+        
+        return;
+    }
+    
+    
+    /* !setLowerInclusive() */
+    
+    /**
+     * setLowerInclusive() should set the is-lower-inclusive flag to true
+     */
+    public function testSetLowerInclusiveReturnsSelf()
+    {
+        $interval = new Interval();
+        
+        $this->assertSame($interval, $interval->setLowerInclusive());
+        $this->assertTrue($this->getProperty('isLowerInclusive', $interval));
+        
+        return;
+    }
+    
+    
     /* !setSeparator() */
     
     /**
@@ -449,6 +605,38 @@ class IntervalTest extends TestCase
         
         $this->assertSame($interval, $interval->setUpper($upper));
         $this->assertEquals($upper, $this->getProperty('upper', $interval));
+        
+        return;
+    }
+    
+    
+    /* !setUpperExclusive() */
+    
+    /**
+     * setUpperExclusive() should set the is-upper-inclusive flag to false
+     */
+    public function testSetUpperExclusiveReturnsSelf()
+    {
+        $interval = new Interval();
+        
+        $this->assertSame($interval, $interval->setUpperExclusive());
+        $this->assertFalse($this->getProperty('isUpperInclusive', $interval));
+        
+        return;
+    }
+    
+    
+    /* !setUpperInclusive() */
+    
+    /**
+     * setUpperInclusive() should set the is-upper-inclusive flag to true
+     */
+    public function testSetUpperInclusiveReturnsSelf()
+    {
+        $interval = new Interval();
+        
+        $this->assertSame($interval, $interval->setUpperInclusive());
+        $this->assertTrue($this->getProperty('isUpperInclusive', $interval));
         
         return;
     }

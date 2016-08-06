@@ -190,9 +190,10 @@ class Interval
      */
     public function setLower($lower): self
     {
+        // if $lower is not a number, short-circuit
         if ( ! is_numeric($lower)) {
             throw new InvalidArgumentException(
-                __METHOD__ . "expects parameter one, lower, to be a number"
+                __METHOD__ . "() expects parameter one, lower, to be a number"
             );
         }
         
@@ -273,23 +274,45 @@ class Interval
     }
     
     /**
-     * Returns the interval's is-lower-inclusive flag
+     * Returns true if the lower-bound is exclusive
      *
-     * @return  self
+     * @return  bool
      * @since   0.1.0
      */
-    public function isLowerInclusive()
+    public function isLowerExclusive(): bool
     {
-        return $this->isLowerInclusive;
+        return ! $this->isLowerInclusive;
     }
     
     /**
-     * Returns the interval's is-upper-inclusive flag
+     * Returns true if the lower-bound is inclusive
      *
-     * @return  self
+     * @return  bool
      * @since   0.1.0
      */
-    public function isUpperInclusive()
+    public function isLowerInclusive(): bool
+    {
+        return $this->isLowerInclusive;
+    }
+   
+    /**
+     * Returns true if the upper-bound is exclusive
+     *
+     * @return  bool
+     * @since   0.1.0
+     */
+    public function isUpperExclusive(): bool
+    {
+        return ! $this->isUpperInclusive;
+    }
+     
+    /**
+     * Returns true if the upper-bound is inclusive
+     *
+     * @return  bool
+     * @since   0.1.0
+     */
+    public function isUpperInclusive(): bool
     {
         return $this->isUpperInclusive;
     }
@@ -346,6 +369,58 @@ class Interval
         // otherwise, set the endpoints
         $this->lower = +$endpoints[0];
         $this->upper = +$endpoints[1];
+        
+        return $this;
+    }
+    
+    /**
+     * Sets the is-lower-inclusive flag to false
+     *
+     * @return  self
+     * @since   0.1.0
+     */
+    public function setLowerExclusive(): self
+    {
+        $this->isLowerInclusive = false;
+        
+        return $this;
+    }
+    
+    /**
+     * Sets the is-lower-inclusive flag to true
+     *
+     * @return  self
+     * @since   0.1.0
+     */
+    public function setLowerInclusive(): self
+    {
+        $this->isLowerInclusive = true;
+        
+        return $this;
+    }
+    
+    /**
+     * Sets the is-upper-inclusive flag to false
+     *
+     * @return  self
+     * @since   0.1.0
+     */
+    public function setUpperExclusive(): self
+    {
+        $this->isUpperInclusive = false;
+        
+        return $this;
+    }
+    
+    /**
+     * Sets the is-upper-inclusive flag to true
+     *
+     * @return  self
+     * @since   0.1.0
+     */
+    public function setUpperInclusive(): self
+    {
+        $this->isUpperInclusive = true;
         
         return $this;
     }
