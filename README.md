@@ -4,7 +4,7 @@ A set of numbers between two endpoints.
 ```php
 use Jstewmc\Interval;
 
-// create an between 2 (exclusive) and 4 (inclusive)
+// create an interval between 2 (exclusive) and 4 (inclusive)
 $interval = new Interval('(2, 4]');
 
 // compare values
@@ -20,13 +20,9 @@ echo $interval;  // returns "(2, 4]"
 
 ## Syntax
 
-This library supports standard US interval syntax (e.g., `(2, 4]`). The first character MUST be an open-bracket (`[`) or open-parentheses (`(`); the last character MUST be a close-bracket (`]`) or close-parentheses (`)`); and, in-between MUST be two numbers separated by a comma-space (e.g., `, `). Positive or negative floats or integers are accepted.
+This library supports standard US interval syntax (e.g., `(2, 4]`). The first character MUST be an open-bracket (`[`) or open-parentheses (`(`); the last character MUST be a close-bracket (`]`) or close-parentheses (`)`); and, in-between MUST be two numbers separated by a comma-space (e.g., `, `). Positive or negative floats and integers are accepted.
 
-On the other hand, this library does not support a few things:
-
-* It does not support _infinity_. 
-* It does not support _reverse-bracket_ syntax (e.g., `]2, 4]`).
-* It does not support _semi-colon separated_ syntax (e.g., `[1.000; 2.000]`).
+On the other hand, this library does not support not support _infinity_; _reverse-bracket_ syntax (e.g., `]2, 4]`); or, _semi-colon separated_ syntax (e.g., `[2; 4]`).
 
 ## Usage
 
@@ -38,10 +34,10 @@ use Jstewmc\Interval;
 $a = new Interval('(2, 4]');
 
 $b = (new Interval())
-    ->setIsLowerInclusive(false)
+    ->setLowerExclusive()
     ->setLower(2)
     ->setUpper(4)
-    ->setIsUpperInclusive(true);
+    ->setUpperInclusive();
 
 $a == $b;  // returns true
 ```
@@ -72,6 +68,20 @@ $interval->getLower();             // returns 2
 $interval->getUpper();             // returns 4
 $interval->getIsUpperInclusive();  // returns true
 ```
+
+There are a few convenience methods to make getting and setting the boundaries eaiser:
+
+```php
+use Jstewmc\Interval;
+
+$interval = new Interval('(2, 4]');
+
+$interval->isLowerInclusive();  // returns false
+$interval->isLowerExclusive();  // returns true
+$interval->isUpperInclusive();  // returns true
+$interval->isUpperExclusive();  // returns false
+```
+
 
 That's about it!
 
