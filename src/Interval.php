@@ -15,10 +15,26 @@ use InvalidArgumentException;
  * A numeric interval
  * 
  * @since  0.1.0
+ * @since  0.2.0  add support for infinity
  */
 class Interval
 {
-    /* Private properties */
+    /* !Constants */
+    
+    /**
+     * @var    string  the placeholder for positive infinity
+     * @since  0.2.0
+     */
+    const INFINITY_POSITIVE = 'INF';
+    
+    /**
+     * @var    string  the placeholder for negative infinity
+     * @since  0.2.0
+     */
+    const INFINITY_NEGATIVE = '-INF';
+    
+    
+    /* !Private properties */
     
     /**
      * @var    bool  a flag indicating whether or not the lower-bound is inclusive
@@ -35,7 +51,7 @@ class Interval
     private $isUpperInclusive = false;
     
     /**
-     * @var    int|float  the interval's lower bound
+     * @var    mixed  the interval's lower bound
      * @since  0.1.0
      */
     private $lower;
@@ -47,7 +63,7 @@ class Interval
     private $separator = ', ';
     
     /**
-     * @var    int|float  the interval's upper bound
+     * @var    mixed  the interval's upper bound
      * @since  0.1.0
      */
     private $upper;
@@ -72,6 +88,8 @@ class Interval
      * Called when the interval is treated like a string
      *
      * @return  string
+     * @since   0.1.0
+     * @since   0.2.0  add support for infinity
      */
     public function __toString(): string
     {
@@ -80,10 +98,23 @@ class Interval
         // append the lower boundary
         $string .= $this->isLowerInclusive ? '[' : '(';
         
+        // get the endpoints as an array
+        $endpoints = [$this->lower, $this->upper];
+        
+        // loop through the endpoints
+        foreach ($endpoints as &$endpoint) {
+            // get the value as a string based on its value
+            if ($endpoint === -INF) {
+                $endpoint = self::INFINITY_NEGATIVE;
+            } elseif ($endpoint === INF) {
+                $endpoint = self::INFINITY_POSITIVE;
+            } else {
+                $endpoint = (string) $endpoint;
+            }
+        }
+        
         // append the lower bound, separator, and upper bound
-        $string .= $this->lower;
-        $string .= $this->separator;
-        $string .= $this->upper;
+        $string .= implode($this->separator, $endpoints);
         
         // append the upper boundary
         $string .= $this->isUpperInclusive ? ']' : ')';
@@ -327,11 +358,12 @@ class Interval
      * @throws  InvalidArgumentException  if the endpoints and equal but the 
      *     boundaries are not equal (e.g., (1, 1])
      * @since   0.1.0
+     * @since   0.2.0  add support for infinity
      */
     public function parse(string $string): self
     {
         // if the $string is not valid interval, short-circuit
-        $pattern = '/^[\[\(]-?\d*[\.]?\d+, -?\d*[\.]?\d+[\]\)]$/';
+        $pattern = '/^[\[\(]-?(\d*[\.]?\d+|INF), -?(\d*[\.]?\d+|INF)[\]\)]$/';
         if ( ! preg_match($pattern, $string)) {
             throw new InvalidArgumentException(
                 __METHOD__ . "() expects parameter one, string, to be a valid "
@@ -345,6 +377,20 @@ class Interval
         
         // get the endpoints
         $endpoints = explode($this->separator, substr($string, 1, -1));
+        
+        // loop through the endpoints
+        foreach ($endpoints as &$endpoint) {
+            // if the endpoint is negative or positive infinity, convert the value 
+            //     to the PHP constant; otherwise, cast the value to int or float
+            //
+            if ($endpoint === self::INFINITY_NEGATIVE) {
+                $endpoint = -INF;
+            } elseif ($endpoint === self::INFINITY_POSITIVE) {
+                $endpoint = INF;
+            } else {
+                $endpoint = +$endpoint;
+            }    
+        }
         
         // if the endpoints are out of order, short-circuit
         if ($endpoints[1] < $endpoints[0]) {
@@ -367,8 +413,8 @@ class Interval
         }
         
         // otherwise, set the endpoints
-        $this->lower = +$endpoints[0];
-        $this->upper = +$endpoints[1];
+        $this->lower = $endpoints[0];
+        $this->upper = $endpoints[1];
         
         return $this;
     }

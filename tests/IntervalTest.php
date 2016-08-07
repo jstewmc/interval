@@ -48,9 +48,9 @@ class IntervalTest extends TestCase
     /* !__toString() */
     
     /**
-     * __toString() should return a string
+     * __toString() should return a string if interval does not contain infinity
      */
-    public function testToStringReturnsString()
+    public function testToStringReturnsStringIfIntervalDoesNotContainInfinity()
     {
         $interval = (new Interval())
             ->setIsLowerInclusive(false)
@@ -59,6 +59,22 @@ class IntervalTest extends TestCase
             ->setIsUpperInclusive(true);
         
         $this->assertEquals('(1, 2]', (string) $interval);
+        
+        return;
+    }
+    
+    /**
+     * __toString() should return a string if interval contains infinity
+     */
+    public function testToStringReturnsStringIfIntervalContainsInfinity()
+    {
+        $interval = (new Interval())
+            ->setIsLowerInclusive(true)
+            ->setLower(-INF)
+            ->setUpper(INF)
+            ->setIsUpperInclusive(true);
+        
+        $this->assertEquals('[-INF, INF]', (string) $interval);
         
         return;
     }
@@ -83,9 +99,9 @@ class IntervalTest extends TestCase
      */
     public function testCompareReturnsIntIfXIsBelowInterval()
     {
-        $x = 1;
+        $x = -999;
         
-        $interval = (new Interval())->setLower(999)->setUpper(999 + 1);
+        $interval = (new Interval())->setLower(0)->setUpper(INF);
         
         $this->assertEquals(-1, $interval->compare($x));
         
@@ -99,7 +115,7 @@ class IntervalTest extends TestCase
     {
         $x = 999;
         
-        $interval = (new Interval())->setLower(0)->setUpper(0 + 1);
+        $interval = (new Interval())->setLower(-INF)->setUpper(0);
         
         $this->assertEquals(1, $interval->compare($x));
         
@@ -452,7 +468,7 @@ class IntervalTest extends TestCase
     /**
      * parse() should return self if interval is valid
      */
-    public function testParseThrowsExceptionIfIntervalIsValid()
+    public function testParseReturnsSelfIfIntervalIsValid()
     {
         $expected = (new Interval())
             ->setIsLowerInclusive(true)
@@ -461,6 +477,24 @@ class IntervalTest extends TestCase
             ->setIsUpperInclusive(false);
         
         $actual = (new Interval())->parse('[1, 2)');
+        
+        $this->assertEquals($expected, $actual);
+        
+        return;
+    }
+    
+    /**
+     * parse() should return self if interval contains infinity
+     */
+    public function testParseReturnsSelfIfIntervalContainsInfinity()
+    {
+        $expected = (new Interval())
+            ->setIsLowerInclusive(true)
+            ->setLower(-INF)
+            ->setUpper(INF)
+            ->setIsUpperInclusive(true);
+        
+        $actual = (new Interval())->parse('[-INF, INF]');
         
         $this->assertEquals($expected, $actual);
         
