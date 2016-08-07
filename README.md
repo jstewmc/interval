@@ -32,11 +32,10 @@ Positive or negative floats, integers, and infinity are accepted.
 
 For example:
 
-* `(2, 4]`, 2 < _x_ <= 4
-* `(-10.5, 10.5)`, -10.5 < _x_ < 10.5
-* `[0, INF)`, 0 <= _x_ < &infin; 
-* `(-INF, INF)`, -&infin; < _x_ < &infin;
-
+* `(2, 4]` represents 2 < _x_ <= 4
+* `(-10.5, 10.5)` represents -10.5 < _x_ < 10.5
+* `[0, INF)` represents `0 <= _x_ < &infin;`
+* `(-INF, INF)` represents -&infin; < _x_ < &infin;
 
 Keep in mind, this library does not support _reverse-bracket_ syntax (e.g., `]2, 4]`) or _semi-colon separated_ syntax (e.g., `[2; 4]`).
 
@@ -58,7 +57,19 @@ $b = (new Interval())
 $a == $b;  // returns true
 ```
 
-Keep in mind this library supports infinity, using the string `'INF'`, and PHP supports infinity as a number, using the `INF` [predefined constant](http://php.net/manual/en/math.constants.php):
+Keep in mind, when instantiating an interval from a string, an `InvalidArgumentException` will be thrown if the interval's syntax is invalid:
+
+```php
+use Jstewmc\Interval;
+
+new Interval('[0; 0]');      // throws exception (semicolon syntax not supported)
+new Interval(']0, 2]');      // throws exception (reverse brackets not supported)
+new Interval('[foo, bar]');  // throws exception (use numbers or INF)
+new Interval('[0, 0)');      // throws exception (same endpoint, different boundary)
+new Interval('[1, -1]');     // throws exception (upper- is less than lower-bound)
+```
+
+Infinity is supported as the string `'INF'` or the `INF` [predefined constant](http://php.net/manual/en/math.constants.php):
 
 ```php
 use Jstewmc\Interval;
@@ -73,7 +84,6 @@ $b = (new Interval())
 
 $a == $b;  // returns true
 ```
-
 
 You can compare a value to the interval using the `compare()` method. The `compare()` method will return `-1`, `0`, or `1` if the value is _below_, _inside_, or _above_ the interval, respectively:
 
