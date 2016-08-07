@@ -34,7 +34,7 @@ For example:
 
 * `(2, 4]` represents 2 < _x_ <= 4
 * `(-10.5, 10.5)` represents -10.5 < _x_ < 10.5
-* `[0, INF)` represents `0 <= _x_ < &infin;`
+* `[0, INF)` represents 0 <= _x_ < &infin;
 * `(-INF, INF)` represents -&infin; < _x_ < &infin;
 
 Keep in mind, this library does not support _reverse-bracket_ syntax (e.g., `]2, 4]`) or _semi-colon separated_ syntax (e.g., `[2; 4]`).
@@ -146,6 +146,8 @@ That's about it!
 ### 0.2.0, August 7, 2016
 
 * Add support for infinity (e.g., `'(-INF, 0]'`).
+* Update error messages to be a little more informative.
+* Update README examples.
 
 ### 0.1.0, August 6, 2016 
 
