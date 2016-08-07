@@ -20,9 +20,25 @@ echo $interval;  // returns "(2, 4]"
 
 ## Syntax
 
-This library supports standard US interval syntax (e.g., `(2, 4]`). The first character MUST be an open-bracket (`[`) or open-parentheses (`(`); the last character MUST be a close-bracket (`]`) or close-parentheses (`)`); and, in-between MUST be two numbers separated by a comma-space (e.g., `, `). Positive or negative floats and integers are accepted.
+This library supports standard US interval syntax requiring (in order): 
 
-On the other hand, this library does not support not support _infinity_; _reverse-bracket_ syntax (e.g., `]2, 4]`); or, _semi-colon separated_ syntax (e.g., `[2; 4]`).
+* an open-bracket (`[`) or open-parentheses (`(`); 
+* a number, positive infinity (`INF`), or negative infinity (`-INF`);
+* a comma-space (`, `);
+* a number, positive infinity (`INF`), or negative infinity (`-INF`); and,
+* a close-bracket (`]`) or close-parentheses (`)`). 
+
+Positive or negative floats, integers, and infinity are accepted.
+
+For example:
+
+* `(2, 4]`, 2 < _x_ <= 4
+* `(-10.5, 10.5)`, -10.5 < _x_ < 10.5
+* `[0, INF)`, 0 <= _x_ < &infin; 
+* `(-INF, INF)`, -&infin; < _x_ < &infin;
+
+
+Keep in mind, this library does not support _reverse-bracket_ syntax (e.g., `]2, 4]`) or _semi-colon separated_ syntax (e.g., `[2; 4]`).
 
 ## Usage
 
@@ -41,6 +57,23 @@ $b = (new Interval())
 
 $a == $b;  // returns true
 ```
+
+Keep in mind this library supports infinity, using the string `'INF'`, and PHP supports infinity as a number, using the `INF` [predefined constant](http://php.net/manual/en/math.constants.php):
+
+```php
+use Jstewmc\Interval;
+
+$a = new Interval('(-INF, 0]');
+
+$b = (new Interval())
+    ->setLowerExclusive()
+    ->setLower(-INF)
+    ->setUpper(0)
+    ->setUpperInclusive(true);
+
+$a == $b;  // returns true
+```
+
 
 You can compare a value to the interval using the `compare()` method. The `compare()` method will return `-1`, `0`, or `1` if the value is _below_, _inside_, or _above_ the interval, respectively:
 
@@ -99,6 +132,10 @@ That's about it!
 [Jack Clayton](mailto:clayjs0@gmail.com)
 
 ## Version
+
+### 0.2.0, August 7, 2016
+
+* Add support for infinity (e.g., `'(-INF, 0]'`).
 
 ### 0.1.0, August 6, 2016 
 
