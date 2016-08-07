@@ -367,7 +367,7 @@ class Interval
         if ( ! preg_match($pattern, $string)) {
             throw new InvalidArgumentException(
                 __METHOD__ . "() expects parameter one, string, to be a valid "
-                    . "interval"
+                    . "interval; see the README for details"
             );
         }
         
@@ -396,7 +396,8 @@ class Interval
         if ($endpoints[1] < $endpoints[0]) {
             throw new InvalidArgumentException(
                 __METHOD__ . "() expects parameter one, string, to be a valid "
-                    . "interval; the upper bound is greater than the lower bound"
+                    . "interval, however, the upper bound appears to be greater "
+                    . "than the lower bound"
             );
         }
         
@@ -407,8 +408,8 @@ class Interval
         ) {
             throw new InvalidArgumentException(
                 __METHOD__ . "() expects parameter one, string, to be a valid "
-                    . "interval; if the endpoints are equal, the boundaries must "
-                    . "be the same"
+                    . "interval, however, the endpoints are the same but the "
+                    . "boundaries are different"
             );
         }
         
