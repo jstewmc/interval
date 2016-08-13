@@ -130,7 +130,6 @@ echo $interval->setUpperInclusive();  // prints "(2, 4]"
 echo $interval->setUpperExclusive();  // prints "(2, 4)"
 ```
 
-
 That's about it!
 
 ## License
@@ -142,6 +141,11 @@ That's about it!
 [Jack Clayton](mailto:clayjs0@gmail.com)
 
 ## Version
+
+### 1.0.0, August 13, 2016
+
+* Major release
+* Update `composer.json`
 
 ### 0.2.0, August 7, 2016
 
